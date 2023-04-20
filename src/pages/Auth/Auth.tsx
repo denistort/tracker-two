@@ -1,32 +1,27 @@
-import { Link } from "react-router-dom";
+import { LoaderFunction, useLoaderData } from "react-router-dom";
+import { SignInForm } from "./SignInForm";
+import { SignUpForm } from "./SignUpForm";
+
+export const loader: LoaderFunction = async ({ request }) => {
+	const url = new URL(request.url);
+	const tab = url.searchParams.get("tab");
+	return { tab };
+};
+
+export type ReturnLoaderAuth = ReturnType<typeof loader>;
 
 export const Auth = () => {
+	const { tab } = useLoaderData() as { tab: string };
+	console.log(tab);
 	return (
 		<>
 			<div className="auth-page__wrapper">
-				<img className="auth-page__image" src="/images/logo.svg" alt="логотип habbit" />
-				<div className="login-form__wrapper">
-					<h2 className="h2">Login</h2>
-					<div className="input__wrapper">
-						<label htmlFor="email">Email</label>
-						<input id="email" type="text" name="email" placeholder="Login" />
-					</div>
-					<div className="input__wrapper">
-						<label htmlFor="password">Password</label>
-						<input
-							id="password"
-							type="password"
-							name="email"
-							placeholder="Password"
-						/>
-					</div>
-					<button className="button" type="submit">
-						Войти
-					</button>
-					<div>
-						<Link to={'/'}>Вернуться в приложение</Link>
-					</div>
-				</div>
+				<img
+					className="auth-page__image"
+					src="/images/logo.svg"
+					alt="логотип habbit"
+				/>
+				{tab === "sign-in" ? <SignInForm /> : <SignUpForm />}
 			</div>
 		</>
 	);
