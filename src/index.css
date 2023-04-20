@@ -1,15 +1,22 @@
 * {
 	box-sizing: border-box;
 }
-
+:root {
+	--media-1024: calc(1024 / 16) em;
+	--root-padding: 2rem;
+	--box-shadow: 0px 8px 14px rgba(62, 107, 224, 0.12);
+	--day-done-color: #7ae67a;
+	--day-not-done-color: #ff5a5a96;
+}
 html {
 	font-size: 62.5%;
 }
 body {
-	font-family: 'Comfortaa', cursive;
+	font-family: "Comfortaa", cursive;
 	margin: 0;
-	background-color: #F3F6FD;
+	background-color: #f3f6fd;
 	font-weight: 400;
+	width: var(--media-1024);
 }
 button {
 	font: inherit;
@@ -19,17 +26,26 @@ button {
 }
 
 .logo {
-	margin-bottom: 50px;
 	width: 100px;
 	height: 100px;
 	cursor: pointer;
-	/* position: fixed; */
+	z-index: 2;
+	top: 3rem;
+	left: calc(16rem / 2);
 }
 
 .panel {
 	background: white;
-	min-height: 100vh;
-	padding: 3rem;
+	position: fixed;
+	height: calc(100vh - var(--root-padding) * 2);
+	padding: 1rem 3rem 3rem 3rem;
+	z-index: 1;
+	width: 16rem;
+	overflow: hidden;
+	border-radius: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .menu {
@@ -47,7 +63,7 @@ button {
 }
 
 .menu__item {
-	background: #FFFFFF;
+	background: #ffffff;
 	box-shadow: 0px 8px 14px rgba(62, 107, 224, 0.12);
 	border-radius: 14px;
 	border: none;
@@ -55,9 +71,13 @@ button {
 	width: 45px;
 	cursor: pointer;
 }
-
+.nav__buttons {
+	display: flex;
+	gap: 1rem;
+	flex-direction: column;
+}
 .menu__item:hover {
-	background: #6A6AFB;
+	background: #6a6afb;
 }
 
 .menu__item:hover img {
@@ -65,7 +85,7 @@ button {
 }
 
 .menu__item_active {
-	background: #5051F9;
+	background: #5051f9;
 }
 
 .menu__item_active img {
@@ -74,21 +94,25 @@ button {
 
 .menu__add {
 	background: none;
-	border: 1px solid #CAD5FF;
+	border: 1px solid #cad5ff;
 	border-radius: 14px;
 	height: 45px;
 	width: 45px;
 	cursor: pointer;
+	color: #cad5ff;
 }
-
+.menu__add svg path {
+	stroke: #cad5ff;
+}
 .menu__add:hover {
-	background: #EFF2FF;
+	background: #eff2ff;
 }
 
 .content {
-	min-width: 900px;
 	flex: 1;
 	padding: 4.5rem;
+	padding-left: calc(16rem + 4.5rem);
+	height: 5000px;
 }
 
 header {
@@ -101,6 +125,11 @@ h1 {
 	font-size: 3rem;
 	line-height: 3.3rem;
 	color: #000000;
+}
+
+h3 {
+	font-size: 2.2rem;
+	text-align: left;
 }
 
 .progress {
@@ -129,7 +158,7 @@ h1 {
 
 .progress__bar {
 	width: 100%;
-	background: #E6E9ED;
+	background: #e6e9ed;
 	border-radius: 4px;
 	height: 5px;
 	position: relative;
@@ -140,7 +169,7 @@ h1 {
 	transition: all 0.5s;
 	height: 5px;
 	border-radius: 4px;
-	background: #5051F9;
+	background: #5051f9;
 }
 
 main {
@@ -148,7 +177,7 @@ main {
 }
 
 .habbit {
-	background: #FFFFFF;
+	background: #ffffff;
 	border-radius: 10px;
 	display: flex;
 	align-items: center;
@@ -156,9 +185,9 @@ main {
 }
 
 .habbit__day {
-	background: #FBFAFF;
+	background: #fbfaff;
 	border-radius: 10px 0 0 10px;
-	border-right: 1px solid #E7EBFB;
+	border-right: 1px solid #e7ebfb;
 	font-size: 14px;
 	line-height: 16px;
 	padding: 2rem 4rem;
@@ -182,15 +211,15 @@ main {
 }
 
 .habbit__delete:hover {
-	background: #EFF2FF;
+	background: #eff2ff;
 }
 
 input {
-	background: #FFFFFF;
-	border: 1px solid #E7EBFB;
+	background: #ffffff;
+	border: 1px solid #e7ebfb;
 	border-radius: 9px;
 	padding: 12px 20px;
-	font-family: 'Comfortaa', cursive;
+	font-family: "Comfortaa", cursive;
 	flex: 1;
 	font-weight: 400;
 	font-size: 1.4rem;
@@ -198,7 +227,7 @@ input {
 }
 
 input::placeholder {
-	color: #8899A8;
+	color: #8899a8;
 }
 
 input.error {
@@ -224,12 +253,12 @@ input.error {
 }
 
 .button {
-	background: #EDECFE;
+	background: #edecfe;
 	border-radius: 10px;
 	border: none;
 	font-size: 1.3rem;
 	line-height: 1.4rem;
-	color: #5051F9;
+	color: #5051f9;
 	padding: 1.4rem 3rem;
 	cursor: pointer;
 }
@@ -255,7 +284,7 @@ input.error {
 }
 
 .popup {
-	background: #FFFFFF;
+	background: #ffffff;
 	box-shadow: 0px 8px 14px 12px rgba(56, 56, 56, 0.05);
 	border-radius: 10px;
 	max-width: 60rem;
@@ -296,7 +325,7 @@ h2 {
 }
 
 .icon {
-	border: 1px solid #5051F9;
+	border: 1px solid #5051f9;
 	border-radius: 14px;
 	background: white;
 	display: flex;
@@ -308,11 +337,11 @@ h2 {
 }
 
 .icon_active {
-	background: #5051F9;
+	background: #5051f9;
 }
 
 .icon:hover {
-	background: #6A6AFB;
+	background: #6a6afb;
 }
 
 .icon:hover img {
@@ -335,6 +364,119 @@ h2 {
 	width: 100%;
 }
 
-/* @media (max-width: 900px) {
-	.app {}
-} */
+.habbit__calendar {
+	display: grid;
+	/* min-height: 50rem; */
+	grid-template-columns: repeat(5, 1fr);
+	gap: 1rem;
+	margin-bottom: 2rem;
+}
+.habbit__calendar_day {
+	background-color: white;
+	height: 15rem;
+	border-radius: 1rem;
+	transition: box-shadow 0.4s ease;
+	padding: 1rem;
+	user-select: none;
+	cursor: pointer;
+}
+
+.habbit__calendar_day:hover {
+	box-shadow: var(--box-shadow);
+}
+
+.habbit__calendar_day__item-num {
+	font-size: 1.6rem;
+	line-height: 2.1rem;
+	margin: 0;
+	text-align: left;
+	color: #768396;
+}
+/*
+	1024px / 16 = 64em
+*/
+@media (max-width: 64em) {
+	.habbit__calendar {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+/*
+	900px
+*/
+@media (max-width: 56.25em) {
+	.app {
+		flex-direction: column;
+	}
+	.nav__buttons {
+		flex-direction: row;
+	}
+	.panel {
+		padding: 0;
+		z-index: 1;
+		width: calc(100% - var(--root-padding) * 2);
+		height: 10rem;
+		display: flex;
+		justify-content: space-between;
+		padding-right: 2rem;
+		position: absolute;
+		flex-direction: row;
+	}
+	.content {
+		padding-left: 2rem;
+		padding-right: 2rem;
+		padding-top: calc(10rem + 4.5rem);
+	}
+	.logo {
+		top: 0;
+		left: 0;
+		position: relative;
+	}
+}
+
+.footer {
+	border-radius: 1rem;
+	width: 100%;
+	height: 10rem;
+	background-color: white;
+	margin-top: 6rem;
+	padding: 1rem;
+}
+/*
+	breakpoint
+
+	768px / 16 = 48em
+*/
+@media (max-width: 48em) {
+	.content {
+		padding-left: 0rem;
+		padding-right: 0rem;
+		padding-top: calc(10rem + 4.5rem);
+	}
+}
+
+/*
+	breakpoint
+
+	620px / 16 = 40.625em
+*/
+@media (max-width: 40.625em) {
+	header {
+		flex-direction: column;
+	}
+	.habbit__calendar {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	h3 {
+		text-align: center;
+	}
+}
+
+.transition {
+	transition: opacity 0.5s ease 0s;
+}
+
+.wewe {
+	opacity: 0;
+	visibility: hidden;
+}
