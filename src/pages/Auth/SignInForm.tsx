@@ -8,6 +8,7 @@ import { loginWithEmail } from "../../supabase/actions/loginWithEmail";
 
 import c from "./style.module.css";
 import { useNotifications } from "reapop";
+import useNProgress from "../../Hooks/UseNprogress";
 
 const schema = yup
 	.object({
@@ -21,6 +22,7 @@ export const SignInForm = () => {
 	const [isLoading, seIsLoading] = useState(false);
 
 	const { notify } = useNotifications();
+	const { loaderStart, loaderEnd } = useNProgress()
 
 	const {
 		register,
@@ -32,8 +34,10 @@ export const SignInForm = () => {
 	});
 	const onSubmitHandler = async (data: FormData) => {
 		seIsLoading(true);
+		loaderStart()
 		const res = await loginWithEmail(data.email, data.password);
 		reset();
+		loaderEnd()
 		seIsLoading(false);
 		if (res.error) {
 			notify("Данные введенные вами были пароль или почта не верны", "error");
