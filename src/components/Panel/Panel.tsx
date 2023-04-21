@@ -24,8 +24,8 @@ export const Panel = () => {
 					<Link to={"/profile"}>
 						<button className="menu__add">
 							<svg
-								width="24px"
-								height="24px"
+								width="2.4rem"
+								height="2.4rem"
 								viewBox="0 0 24 24"
 								strokeWidth="1.5"
 								fill="none"

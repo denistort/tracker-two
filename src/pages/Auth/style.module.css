@@ -1,0 +1,13 @@
+.notify {
+	border-radius: 1rem;
+	padding: 2rem;
+	cursor: pointer;
+}
+.succes {
+	background: rgb(111, 233, 111);
+	color: white;
+}
+.error {
+	background-color: rgba(252, 105, 105, 0.651);
+	color: white;
+}

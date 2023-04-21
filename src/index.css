@@ -27,9 +27,16 @@ button {
 label {
 	font-size: 1.2rem;
 }
+#root {
+  max-width: 128rem;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
 .logo {
-	width: 100px;
-	height: 100px;
+	width: 10rem;
+	height: 10rem;
 	cursor: pointer;
 	z-index: 2;
 	top: 3rem;
@@ -39,7 +46,7 @@ label {
 .panel {
 	background: white;
 	position: fixed;
-	height: calc(100vh - var(--root-padding) * 2);
+	height: 60rem;
 	padding: 1rem 3rem 3rem 3rem;
 	z-index: 1;
 	width: 16rem;
@@ -98,10 +105,14 @@ label {
 	background: none;
 	border: 1px solid #cad5ff;
 	border-radius: 14px;
-	height: 45px;
-	width: 45px;
+	height: 4.5rem;
+	width: 4.5rem;
 	cursor: pointer;
 	color: #cad5ff;
+}
+.menu__add img {
+	height: 2.4rem;
+	width: 2.4rem;
 }
 .menu__add svg path {
 	stroke: #cad5ff;
@@ -113,6 +124,8 @@ label {
 .content {
 	flex: 1;
 	padding-left: calc(16rem + 4.5rem);
+	display: flex;
+    flex-direction: column;
 	height: 5000px;
 }
 
@@ -218,8 +231,8 @@ main {
 input {
 	background: #ffffff;
 	border: 1px solid #e7ebfb;
-	border-radius: 9px;
-	padding: 12px 20px;
+	border-radius: 1rem;
+	padding: 1.2rem 2rem;
 	font-family: "Comfortaa", cursive;
 	flex: 1;
 	font-weight: 400;
@@ -279,7 +292,7 @@ input.error {
 
 .button {
 	background: #edecfe;
-	border-radius: 10px;
+	border-radius: 1rem;
 	border: none;
 	font-size: 1.3rem;
 	line-height: 1.4rem;
@@ -287,7 +300,10 @@ input.error {
 	padding: 1.4rem 3rem;
 	cursor: pointer;
 }
-
+button img {
+	width: 2.4rem;
+	height: 2.4rem;
+}
 .button:hover {
 	background: #dcdaff;
 }
@@ -418,6 +434,26 @@ h2 {
 	margin: 0;
 	text-align: left;
 	color: #768396;
+}
+
+/*
+	1920
+*/
+
+@media (min-width: 120em) {
+	html {
+		font-size: 90%;
+	}
+}
+
+/*
+	1366
+*/
+
+@media (max-width: 85.375em) {
+	.panel {
+		height: calc(100vh - var(--root-padding) * 2);
+	}
 }
 /*
 	1024px / 16 = 64em

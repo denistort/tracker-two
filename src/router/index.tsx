@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { Auth, loader } from "../pages/Auth/Auth";
 import { Home } from "../pages/Home/Home";
 import { HabbitDetail } from "../pages/HabbitDetail/HabbitDetail";
-import { Profile } from "../pages/Profile/Profile";
+import { Profile, profileLoader } from "../pages/Profile/Profile";
 import { withLayout } from "../Hocs/wittLayout";
 
 const HomePage = withLayout(Home);
@@ -26,5 +26,6 @@ export const router = createBrowserRouter([
 	{
 		path: "/profile",
 		element: <ProfilePage />,
+		loader: profileLoader
 	},
 ]);
