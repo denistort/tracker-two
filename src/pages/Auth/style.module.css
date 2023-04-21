@@ -11,3 +11,8 @@
 	background-color: rgba(252, 105, 105, 0.651);
 	color: white;
 }
+
+.footer {
+	display: flex;
+	justify-content: space-between;
+}

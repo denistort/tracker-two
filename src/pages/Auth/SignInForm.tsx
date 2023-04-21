@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEventHandler } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { loginWithEmail } from "../../supabase/actions/loginWithEmail";
 
 import c from "./style.module.css";
+import { useNotifications } from "reapop";
 
 const schema = yup
 	.object({
@@ -21,11 +22,13 @@ export const SignInForm = () => {
 	const [error, setError] = useState("");
 	const [isLoading, seIsLoading] = useState(false);
 
+	const { notify } = useNotifications();
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-		reset
+		reset,
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
 	});
@@ -37,8 +40,10 @@ export const SignInForm = () => {
 		if (res.error) {
 			setError(res.error.message);
 			setIsSucces(false);
+			notify("Данные введенные вами были пароль или почта не верны", "error");
 		} else {
 			setError("");
+			notify("Вы успешно вошли в приложение добро пожаловать", "success");
 			setIsSucces(true);
 		}
 	};
@@ -87,7 +92,7 @@ export const SignInForm = () => {
 			<button disabled={isLoading} className="button" type="submit">
 				{isLoading ? "Загрузка..." : "Войти"}
 			</button>
-			<div>
+			<div className={c.footer}>
 				<Link to={"/"}>Вернуться в приложение</Link>
 				<Link to={"/auth?tab=sign-up"}>Зарегистрироваться</Link>
 			</div>

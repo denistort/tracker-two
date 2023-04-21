@@ -33,7 +33,12 @@ label {
   padding: 2rem;
   text-align: center;
 }
-
+a,
+a:visited,
+a:active {
+	color: #232360;
+	font-size: 1.4rem;
+}
 .logo {
 	width: 10rem;
 	height: 10rem;
