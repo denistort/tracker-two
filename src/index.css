@@ -272,6 +272,9 @@ input.error {
 	width: 40%;
 	gap: 2rem;
 }
+.login-form__wrapper .h2 {
+	text-align: center;
+}
 .input__wrapper {
 	display: flex;
 	flex-direction: column;
@@ -467,6 +470,9 @@ h2 {
 	.habbit__calendar {
 		grid-template-columns: repeat(4, 1fr);
 	}
+	.login-form__wrapper {
+		width: 60%;
+	}
 }
 /*
 	900px
@@ -499,6 +505,9 @@ h2 {
 		left: 0;
 		position: relative;
 	}
+	.login-form__wrapper {
+		width: 70%;
+	}
 }
 
 .footer {
@@ -519,6 +528,9 @@ h2 {
 		padding-left: 0rem;
 		padding-right: 0rem;
 		padding-top: calc(10rem + 4.5rem);
+	}
+	.login-form__wrapper {
+		width: 100%;
 	}
 }
 

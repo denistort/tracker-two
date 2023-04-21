@@ -11,7 +11,6 @@ export const signInWithEmailAndPassWord = async (
 	password: string
 ): Promise<AuthResponse> =>
 	supabase.auth.signInWithPassword({ email, password });
-
 /**
  *
  * Register function

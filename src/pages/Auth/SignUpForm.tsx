@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import c from './style.module.css';
 
 export const SignUpForm = () => {
 	return (
@@ -41,7 +42,7 @@ export const SignUpForm = () => {
 			<button className="button" type="submit">
 				Зарегистрироваться
 			</button>
-			<div>
+			<div className={c.footer}>
 				<Link to={"/"}>Вернуться в приложение</Link>
 				<Link to={"/auth?tab=sign-in"}>Войти</Link>
 
