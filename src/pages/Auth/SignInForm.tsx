@@ -18,8 +18,6 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>;
 
 export const SignInForm = () => {
-	const [isSucces, setIsSucces] = useState(false);
-	const [error, setError] = useState("");
 	const [isLoading, seIsLoading] = useState(false);
 
 	const { notify } = useNotifications();
@@ -38,36 +36,16 @@ export const SignInForm = () => {
 		reset();
 		seIsLoading(false);
 		if (res.error) {
-			setError(res.error.message);
-			setIsSucces(false);
 			notify("Данные введенные вами были пароль или почта не верны", "error");
 		} else {
-			setError("");
 			notify("Вы успешно вошли в приложение добро пожаловать", "success");
-			setIsSucces(true);
 		}
-	};
-
-	const closeErrorWindow = () => {
-		setIsSucces(false);
-		setError("");
 	};
 	return (
 		<form
 			className="login-form__wrapper"
 			onSubmit={handleSubmit(onSubmitHandler)}
 		>
-			{isSucces ? (
-				<div onClick={closeErrorWindow} className={`${c.notify} ${c.succes}`}>
-					Вы успешно вошли
-				</div>
-			) : (
-				error && (
-					<div onClick={closeErrorWindow} className={`${c.notify} ${c.error}`}>
-						{error}
-					</div>
-				)
-			)}
 			<h2 className="h2">Login</h2>
 			<div className="input__wrapper">
 				<label htmlFor="email">Email</label>
