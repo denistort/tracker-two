@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
 	signInEmailProviderAction,
+	signOutAction,
 	signUpEmailProviderAction,
 } from "./actionCreator";
 
@@ -76,6 +77,27 @@ export const authSlice = createSlice({
 			state.isLoading = false;
 			state.userCredentials = null;
 		});
+
+
+		/**
+		 * SIGN OUT
+		 */
+		builder.addCase(signOutAction.pending, (state, _action) => {
+			state.isLoading = true;
+		});
+
+		builder.addCase(signOutAction.fulfilled, (state) => {
+			state.userCredentials = null;
+			state.error = null;
+			state.isLoading = false;
+		});
+
+		builder.addCase(signOutAction.rejected, (state, action) => {
+			state.error = action.payload as string;
+			state.isLoading = false;
+			state.userCredentials = null;
+		});
+
 	},
 });
 export const userActions = authSlice.actions;

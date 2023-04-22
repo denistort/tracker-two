@@ -2,16 +2,16 @@ import { ReactNode, FC } from 'react';
 import { useAppSelector } from '../store/hocs';
 import { Navigate } from 'react-router-dom';
 
-export interface PrivateRouteProps {
-	children: ReactNode; 
+export interface PrivateForAuthentificatedProps {
+	children: ReactNode;
 }
 
-export const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
+export const PrivateForAuthentificated: FC<PrivateForAuthentificatedProps> = ({ children }) => {
 	const { userCredentials } = useAppSelector((state) => state.userReducer)
 
-	if (userCredentials) {
+	if (!userCredentials) {
 		return <>{children}</>;
 	} else {
-		return <Navigate to={'/auth?tab=sign-in'}/>
+		return <Navigate to={'/'}/>
 	}
 };

@@ -1,0 +1,18 @@
+.wrapper {
+	width: 100%;
+	padding: 2rem;
+	text-align: center;
+	color: white;
+	font-size: 1.4rem;
+}
+.inner {
+	height: 100%;
+	max-width: var(--max-width);
+	margin: 0 auto;
+}
+.succes {
+	background-color: var(--succes-color);
+}
+.error {
+	background-color: var(--error-color);
+}

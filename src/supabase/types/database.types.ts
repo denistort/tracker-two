@@ -34,29 +34,6 @@ export interface Database {
   }
   public: {
     Tables: {
-      "Habbit-Types": {
-        Row: {
-          created_at: string | null
-          goal: number | null
-          id: string
-          title: string | null
-          type: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          goal?: number | null
-          id: string
-          title?: string | null
-          type?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          goal?: number | null
-          id?: string
-          title?: string | null
-          type?: string | null
-        }
-      }
       Habbits: {
         Row: {
           created_at: string | null
@@ -72,7 +49,7 @@ export interface Database {
           "date-end": string
           "date-start": string
           description: string
-          id: string
+          id?: string
           title: string
           user: string
         }
@@ -90,21 +67,21 @@ export interface Database {
         Row: {
           created_at: string | null
           day: string
-          habbit: string | null
+          habbit: string
           id: string
           status: string
         }
         Insert: {
           created_at?: string | null
           day: string
-          habbit?: string | null
-          id: string
+          habbit: string
+          id?: string
           status: string
         }
         Update: {
           created_at?: string | null
           day?: string
-          habbit?: string | null
+          habbit?: string
           id?: string
           status?: string
         }
@@ -115,27 +92,30 @@ export interface Database {
           email: string
           first_name: string
           id: string
+          id_auth: string
           last_name: string
           login: string
-          profile_image: string
+          profile_image: string | null
         }
         Insert: {
           created_at?: string | null
           email: string
           first_name: string
-          id: string
+          id?: string
+          id_auth: string
           last_name: string
           login: string
-          profile_image: string
+          profile_image?: string | null
         }
         Update: {
           created_at?: string | null
           email?: string
           first_name?: string
           id?: string
+          id_auth?: string
           last_name?: string
           login?: string
-          profile_image?: string
+          profile_image?: string | null
         }
       }
     }

@@ -1,12 +1,14 @@
 import {
 	EmailType,
 	signInWithEmailAndPassWord,
+	signOut,
+	signUpCredentials,
 	signUpWithEmailAndPassWord,
-} from "../../../api/auth";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+} from '../../../api/auth';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const signInEmailProviderAction = createAsyncThunk(
-	"user/sign-in-email-provider",
+	'user/sign-in-email-provider',
 	async (
 		{ email, password }: { email: string; password: string },
 		{ rejectWithValue, fulfillWithValue }
@@ -26,26 +28,25 @@ export const signInEmailProviderAction = createAsyncThunk(
 );
 
 export const signUpEmailProviderAction = createAsyncThunk(
-	"user/sign-up-email-provider",
-	async (
-		{ email, password }: { email: string; password: string },
-		{ rejectWithValue, fulfillWithValue }
-	) => {
+	'user/sign-up-email-provider',
+	async (cred: signUpCredentials, { rejectWithValue, fulfillWithValue }) => {
 		try {
-			const res = await signUpWithEmailAndPassWord(
-				email as EmailType,
-				password
-			);
-			if (res.data.user) {
-				return fulfillWithValue({
-					id: res.data.user.id,
-					email: res.data.user.email,
-					email_confirmed: res.data.user.email_confirmed_at,
-				});
+			const res = await signUpWithEmailAndPassWord(cred);
+			if (res) {
+				return fulfillWithValue(res);
 			}
-			if (res.error) {
-				throw new Error(res.error.message);
-			}
+		} catch (error) {
+			return rejectWithValue(error);
+		}
+	}
+);
+
+export const signOutAction = createAsyncThunk(
+	'user/sign-out',
+	async (_, { rejectWithValue, fulfillWithValue }) => {
+		try {
+			await signOut();
+			return fulfillWithValue(true);
 		} catch (error) {
 			return rejectWithValue(error);
 		}

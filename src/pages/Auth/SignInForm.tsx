@@ -46,10 +46,10 @@ export const SignInForm = () => {
 
 	useNProgress({}, isLoading);
 	useEffect(() => {
-		if (error) {
+		if (!userCredentials && !isLoading && error) {
 			notify("Произошла ошибка: " + error, "error");
 		}
-		if (userCredentials && !isLoading) {
+		if (userCredentials && !isLoading && !error) {
 			notify("Вы успешно вошли в приложение добро пожаловать", "success");
 			navigate("/");
 		}

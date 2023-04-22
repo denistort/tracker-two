@@ -1,15 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
-import c from "./style.module.css";
+import { Link, useNavigate } from 'react-router-dom';
+import c from './style.module.css';
 
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useNotifications } from "reapop";
-import useNProgress from "../../Hooks/UseNProgress";
-import { useEffect, useState } from "react";
-import { EmailType, signUpWithEmailAndPassWord } from "../../api/auth";
-import { useAppDispatch, useAppSelector } from "../../store/hocs";
-import { signUpEmailProviderAction } from "../../store/reducers/userSlice/actionCreator";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useNotifications } from 'reapop';
+import useNProgress from '../../Hooks/UseNProgress';
+import { useEffect, useState } from 'react';
+
+import { useAppDispatch, useAppSelector } from '../../store/hocs';
+import { signUpEmailProviderAction } from '../../store/reducers/userSlice/actionCreator';
 
 const schema = yup
 	.object({
@@ -20,7 +20,7 @@ const schema = yup
 		password: yup.string().required(),
 		confirm_password: yup
 			.string()
-			.test("confirm_password-match", function (value) {
+			.test('confirm_password-match', function (value) {
 				return value === this.parent.password;
 			})
 			.required(),
@@ -49,21 +49,24 @@ export const SignUpForm = () => {
 	useNProgress({}, isLoading);
 
 	useEffect(() => {
-		if (error) {
-			notify("Произошла ошибка: " + error, "error");
+		if (!userCredentials && !isLoading && error) {
+			notify('Произошла ошибка: ' + error, 'error');
 		}
-		if (userCredentials && !isLoading) {
-			notify(
-				"Вы успешно зарегистрировались на вашу почту было отправлено сообщение с подтверждением",
-				"success"
-			);
-			navigate("/");
+		if (userCredentials && !isLoading && !error) {
+			notify('Вы успешно вошли в приложение добро пожаловать', 'success');
+			navigate('/');
 		}
-	}, [error, isLoading]);
+	}, [error]);
 
 	const onSubmitHandler = async (data: FormData) => {
 		dispatch(
-			signUpEmailProviderAction({ email: data.email, password: data.password })
+			signUpEmailProviderAction({
+				email: data.email,
+				password: data.password,
+				first_name: data.first_name,
+				last_name: data.last_name,
+				login: data.login,
+			})
 		);
 		reset();
 	};
@@ -81,12 +84,12 @@ export const SignUpForm = () => {
 					id="first_name"
 					type="text"
 					placeholder="Имя"
-					className={errors.first_name ? "error" : ""}
-					aria-invalid={errors.first_name ? "true" : "false"}
-					{...register("first_name")}
+					className={errors.first_name ? 'error' : ''}
+					aria-invalid={errors.first_name ? 'true' : 'false'}
+					{...register('first_name')}
 				/>
 				{errors.first_name && (
-					<div role="alert" className={c["validation-error"]}>
+					<div role="alert" className={c['validation-error']}>
 						*{errors.first_name.message}
 					</div>
 				)}
@@ -98,12 +101,12 @@ export const SignUpForm = () => {
 					id="last_name"
 					type="text"
 					placeholder="Фамилия"
-					className={errors.last_name ? "error" : ""}
-					aria-invalid={errors.last_name ? "true" : "false"}
-					{...register("last_name")}
+					className={errors.last_name ? 'error' : ''}
+					aria-invalid={errors.last_name ? 'true' : 'false'}
+					{...register('last_name')}
 				/>
 				{errors.last_name && (
-					<div role="alert" className={c["validation-error"]}>
+					<div role="alert" className={c['validation-error']}>
 						*{errors.last_name.message}
 					</div>
 				)}
@@ -115,12 +118,12 @@ export const SignUpForm = () => {
 					id="login"
 					type="text"
 					placeholder="Логин"
-					className={errors.login ? "error" : ""}
-					aria-invalid={errors.login ? "true" : "false"}
-					{...register("login")}
+					className={errors.login ? 'error' : ''}
+					aria-invalid={errors.login ? 'true' : 'false'}
+					{...register('login')}
 				/>
 				{errors.login && (
-					<div role="alert" className={c["validation-error"]}>
+					<div role="alert" className={c['validation-error']}>
 						*{errors.login.message}
 					</div>
 				)}
@@ -132,12 +135,12 @@ export const SignUpForm = () => {
 					id="email"
 					type="text"
 					placeholder="Почта"
-					className={errors.email ? "error" : ""}
-					aria-invalid={errors.email ? "true" : "false"}
-					{...register("email")}
+					className={errors.email ? 'error' : ''}
+					aria-invalid={errors.email ? 'true' : 'false'}
+					{...register('email')}
 				/>
 				{errors.email && (
-					<div role="alert" className={c["validation-error"]}>
+					<div role="alert" className={c['validation-error']}>
 						*{errors.email.message}
 					</div>
 				)}
@@ -149,12 +152,12 @@ export const SignUpForm = () => {
 					id="password"
 					type="password"
 					placeholder="Password"
-					className={errors.password ? "error" : ""}
-					aria-invalid={errors.password ? "true" : "false"}
-					{...register("password")}
+					className={errors.password ? 'error' : ''}
+					aria-invalid={errors.password ? 'true' : 'false'}
+					{...register('password')}
 				/>
 				{errors.password && (
-					<div role="alert" className={c["validation-error"]}>
+					<div role="alert" className={c['validation-error']}>
 						*{errors.password.message}
 					</div>
 				)}
@@ -165,24 +168,24 @@ export const SignUpForm = () => {
 				<input
 					id="password_confirm"
 					type="password"
-					className={errors.confirm_password ? "error" : ""}
+					className={errors.confirm_password ? 'error' : ''}
 					placeholder="Password"
-					{...register("confirm_password")}
-					aria-invalid={errors.confirm_password ? "true" : "false"}
+					{...register('confirm_password')}
+					aria-invalid={errors.confirm_password ? 'true' : 'false'}
 				/>
 				{errors.confirm_password && (
-					<div role="alert" className={c["validation-error"]}>
+					<div role="alert" className={c['validation-error']}>
 						*{errors.confirm_password.message}
 					</div>
 				)}
 			</div>
 
 			<button disabled={isLoading} className="button" type="submit">
-				{isLoading ? "Загрузка..." : "Войти"}
+				{isLoading ? 'Загрузка...' : 'Войти'}
 			</button>
 			<div className={c.footer}>
-				<Link to={"/"}>Вернуться в приложение</Link>
-				<Link to={"/auth?tab=sign-in"}>Войти</Link>
+				<Link to={'/'}>Вернуться в приложение</Link>
+				<Link to={'/auth?tab=sign-in'}>Войти</Link>
 			</div>
 		</form>
 	);

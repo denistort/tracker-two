@@ -5,6 +5,7 @@ import { HabbitDetail } from '../pages/HabbitDetail/HabbitDetail';
 import { Profile, profileLoader } from '../pages/Profile/Profile';
 import { withLayout } from '../Hocs/wittLayout';
 import { PrivateRoute } from '../components/PrivateRoute';
+import { PrivateForAuthentificated } from '../components/PrivateForAuthentificated';
 
 const HomePage = withLayout(Home);
 const HabbitPage = withLayout(HabbitDetail);
@@ -21,7 +22,11 @@ export const router = createBrowserRouter([
 	},
 	{
 		path: '/auth',
-		element: <Auth />,
+		element: (
+			<PrivateForAuthentificated>
+				<Auth></Auth>
+			</PrivateForAuthentificated>
+		),
 		loader: loader,
 	},
 	{

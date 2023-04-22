@@ -7,6 +7,9 @@
 	--box-shadow: 0px 8px 14px rgba(62, 107, 224, 0.12);
 	--day-done-color: #7ae67a;
 	--day-not-done-color: #ff5a5a96;
+	--error-color: rgb(231, 88, 88);
+	--succes-color: rgb(90, 219, 108);
+	--max-width: 128rem;
 }
 html {
 	font-size: 62.5%;
@@ -28,7 +31,7 @@ label {
 	font-size: 1.2rem;
 }
 #root {
-	max-width: 128rem;
+	max-width: var(--max-width);
 	margin: 0 auto;
 	padding: 2rem;
 	text-align: center;
