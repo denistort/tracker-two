@@ -28,10 +28,10 @@ label {
 	font-size: 1.2rem;
 }
 #root {
-  max-width: 128rem;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+	max-width: 128rem;
+	margin: 0 auto;
+	padding: 2rem;
+	text-align: center;
 }
 a,
 a:visited,
@@ -130,7 +130,7 @@ a:active {
 	flex: 1;
 	padding-left: calc(16rem + 4.5rem);
 	display: flex;
-    flex-direction: column;
+	flex-direction: column;
 	height: 5000px;
 }
 
@@ -250,7 +250,7 @@ input::placeholder {
 }
 
 input.error {
-	border: 1px solid red;
+	box-shadow: inset 0 0 0px 2px red;
 }
 .auth-page__wrapper {
 	display: flex;

@@ -11,23 +11,20 @@ export interface UseNProgressProps {
 	showSpinner?: boolean;
 	parent?: `#${string}` | `.${string}`;
 }
-export default function useNProgress(props: UseNProgressProps) {
-	const [show, setShow] = useState(false);
+export default function useNProgress(props: UseNProgressProps, isLoading: boolean) {
 	useEffect(() => {
 		NProgress.configure(props);
 	}, []);
 
 	useEffect(() => {
-		if (show) {
+		if (isLoading) {
 			NProgress.start();
 		} else {
 			NProgress.done();
 		}
-	}, [show]);
+	}, [isLoading]);
 
 	return {
-		loaderStart: () => setShow(true),
-		loaderEnd: () => setShow(false),
 		increment: (value: number) => NProgress.inc(value)
 	};
 }

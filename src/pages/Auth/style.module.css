@@ -16,3 +16,8 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+.validation-error {
+	color: red;
+	font-size: 1.2rem;
+}

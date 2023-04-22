@@ -1,6 +1,8 @@
 import { LoaderFunction, useLoaderData } from "react-router-dom";
 import { SignInForm } from "./SignInForm";
 import { SignUpForm } from "./SignUpForm";
+import { useAppSelector } from "../../store/hocs";
+import { redirect } from "react-router-dom";
 
 export const loader: LoaderFunction = async ({ request }) => {
 	const url = new URL(request.url);
@@ -12,6 +14,10 @@ export type ReturnLoaderAuth = ReturnType<typeof loader>;
 
 export const Auth = () => {
 	const { tab } = useLoaderData() as { tab: string };
+	const { data } = useAppSelector((state) => state.userReducer);
+	if (data) {
+		redirect("/");
+	}
 	console.log(tab);
 	return (
 		<>

@@ -1,14 +1,16 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { loginWithEmail } from "../../supabase/actions/loginWithEmail";
-
 import c from "./style.module.css";
 import { useNotifications } from "reapop";
-import useNProgress from "../../Hooks/UseNprogress";
+
+import useNProgress from "../../Hooks/UseNProgress";
+
+import { useAppDispatch, useAppSelector } from "../../store/hocs";
+import { signInEmailProviderAction } from "../../store/reducers/userSlice/actionCreator";
 
 const schema = yup
 	.object({
@@ -18,12 +20,20 @@ const schema = yup
 	.required();
 type FormData = yup.InferType<typeof schema>;
 
+export type LoginType = "byEmailAndPasswod" | "byNumber";
+
 export const SignInForm = () => {
-	const [isLoading, seIsLoading] = useState(false);
+	const [type, setType] = useState<LoginType>("byNumber");
 
 	const { notify } = useNotifications();
-	const { loaderStart, loaderEnd } = useNProgress()
+	const dispatch = useAppDispatch();
 
+	const { error, isLoading, userCredentials } = useAppSelector(
+		(state) => state.userReducer
+	);
+
+	const navigate = useNavigate();
+	//
 	const {
 		register,
 		handleSubmit,
@@ -32,18 +42,24 @@ export const SignInForm = () => {
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
 	});
-	const onSubmitHandler = async (data: FormData) => {
-		seIsLoading(true);
-		loaderStart()
-		const res = await loginWithEmail(data.email, data.password);
-		reset();
-		loaderEnd()
-		seIsLoading(false);
-		if (res.error) {
-			notify("Данные введенные вами были пароль или почта не верны", "error");
-		} else {
-			notify("Вы успешно вошли в приложение добро пожаловать", "success");
+	//
+
+	useNProgress({}, isLoading);
+	useEffect(() => {
+		if (error) {
+			notify("Произошла ошибка: " + error, "error");
 		}
+		if (userCredentials && !isLoading) {
+			notify("Вы успешно вошли в приложение добро пожаловать", "success");
+			navigate("/");
+		}
+	}, [error, isLoading]);
+
+	const onSubmitHandler = (data: FormData) => {
+		dispatch(
+			signInEmailProviderAction({ email: data.email, password: data.password })
+		);
+		reset();
 	};
 	return (
 		<form
@@ -57,9 +73,15 @@ export const SignInForm = () => {
 					id="email"
 					type="text"
 					placeholder="Email"
+					className={errors.email ? "error" : ""}
+					aria-invalid={errors.email ? "true" : "false"}
 					{...register("email")}
 				/>
-				<p>{errors.email?.message}</p>
+				{errors.email && (
+					<div role="alert" className={c["validation-error"]}>
+						*{errors.email.message}
+					</div>
+				)}
 			</div>
 			<div className="input__wrapper">
 				<label htmlFor="password">Password</label>
@@ -67,9 +89,15 @@ export const SignInForm = () => {
 					id="password"
 					type="password"
 					placeholder="Password"
+					className={errors.password ? "error" : ""}
+					aria-invalid={errors.password ? "true" : "false"}
 					{...register("password")}
 				/>
-				<p>{errors.password?.message}</p>
+				{errors.password && (
+					<div role="alert" className={c["validation-error"]}>
+						*{errors.password.message}
+					</div>
+				)}
 			</div>
 			<button disabled={isLoading} className="button" type="submit">
 				{isLoading ? "Загрузка..." : "Войти"}
