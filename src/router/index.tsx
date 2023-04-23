@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Auth, loader } from '../pages/Auth/Auth';
-import { Home } from '../pages/Home/Home';
-import { HabbitDetail } from '../pages/HabbitDetail/HabbitDetail';
+import { Home, homeLoader } from '../pages/Home/Home';
+import { HabbitDetail, habbitDetailLoader } from '../pages/HabbitDetail/HabbitDetail';
 import { Profile, profileLoader } from '../pages/Profile/Profile';
 import { withLayout } from '../Hocs/wittLayout';
 import { PrivateRoute } from '../components/PrivateRoute';
@@ -19,6 +19,7 @@ export const router = createBrowserRouter([
 				<HomePage />,
 			</PrivateRoute>
 		),
+		loader: homeLoader,
 	},
 	{
 		path: '/auth',
@@ -36,6 +37,7 @@ export const router = createBrowserRouter([
 				<HabbitPage />
 			</PrivateRoute>
 		),
+		loader: habbitDetailLoader
 	},
 	{
 		path: '/profile',

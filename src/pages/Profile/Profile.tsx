@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import c from './Profile.module.css';
-import { LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
+import { LoaderFunctionArgs, useLoaderData, useNavigation } from 'react-router-dom';
 import { getUserInfo } from '../../api/user/user.api';
+import useNProgress from '../../Hooks/UseNProgress';
 
 export const profileLoader = async ({ request }: LoaderFunctionArgs) => {
 	const url = new URL(request.url);
@@ -20,7 +21,8 @@ type ProfileData = Awaited<ReturnType<typeof profileLoader>>;
 export const Profile = () => {
 	const { tab, user } = useLoaderData() as ProfileData;
 	const [isEdit, setIsEdit] = useState(tab === 'edit');
-
+	const { state } = useNavigation()
+	useNProgress({}, state === 'loading' || state === 'submitting');
 	return (
 		<>
 			<header>

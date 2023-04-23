@@ -1,68 +1,71 @@
-import { HabbitHeader } from "../../components/HabbitHeader/HabbitHeader";
+import { FC } from 'react';
+import { LoaderFunctionArgs, useLoaderData, useNavigation } from 'react-router-dom';
+import { fetchHabbitById } from '../../api/habbit/habbit.api';
+import { fetchTracks } from '../../api/tracks/tracks.api';
+import { HabbitHeader } from '../../components/HabbitHeader/HabbitHeader';
+import useNProgress from '../../Hooks/UseNProgress';
+
+export const habbitDetailLoader = async ({ params }: LoaderFunctionArgs) => {
+	const id = params['id'];
+	if (id) {
+		try {
+			const tracks = await fetchTracks(id);
+			const habbit = await fetchHabbitById(id);
+
+			if (tracks) {
+				const formattedTracks = tracks.map((track) => ({
+					id: track.id,
+					day: track.day.split(' ').at(1)?.split(',').join(''),
+					month: track.day.split(' ').at(0),
+					year: track.day.split(' ').at(-1),
+					habbitId: track.id,
+					status: track.status,
+				}));
+				const r = formattedTracks.reduce((acc, track) => {
+					if (acc[track.month]) {
+						acc[track.month].push(track);
+					} else {
+						acc[track.month] = [track];
+					}
+					return acc;
+				}, {});
+				return { tracks, trackTree: r, habbit };
+			}
+			return { tracks: null, trackTree: null, habbit };
+		} catch (error) {
+			console.log(error);
+		}
+	}
+	return { tracks: null, trackTree: null, habbit: null };
+};
+
+type HabbitDetailData = Awaited<ReturnType<typeof habbitDetailLoader>>;
 
 export const HabbitDetail = () => {
+	const { trackTree, habbit } = useLoaderData() as HabbitDetailData;
+	const { state } = useNavigation()
+	useNProgress({}, state === 'loading' || state === 'submitting');
+
 	return (
 		<>
-			<HabbitHeader></HabbitHeader>
+			<HabbitHeader
+				title={habbit?.title || 'Без названия'}
+				progress={0}
+			></HabbitHeader>
 			<main>
 				<div id="days"></div>
 				<div>
-					<h3>April</h3>
-					<div className="habbit__calendar">
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">20</h4>
-						</div>
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">21</h4>
-						</div>
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">22</h4>
-						</div>
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">23</h4>
-						</div>
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">24</h4>
-						</div>
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">25</h4>
-						</div>
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">26</h4>
-						</div>
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">27</h4>
-						</div>
-					</div>
-				</div>
-				<div>
-					<h3>May</h3>
-					<div className="habbit__calendar">
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">1</h4>
-						</div>
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">2</h4>
-						</div>
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">3</h4>
-						</div>
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">4</h4>
-						</div>
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">5</h4>
-						</div>
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">6</h4>
-						</div>
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">7</h4>
-						</div>
-						<div tabIndex={0} className="habbit__calendar_day">
-							<h4 className="habbit__calendar_day__item-num">8</h4>
-						</div>
-					</div>
+					{trackTree &&
+						Object.keys(trackTree).map((key) => (
+							<div>
+								<h3>{key}</h3>
+								<div className="habbit__calendar">
+									<RenderDays
+										month={trackTree[key]}
+									></RenderDays>
+								</div>
+							</div>
+						))}
 				</div>
 				{/* <div className="habbit">
 						<div className="habbit__day">День _</div>
@@ -90,3 +93,21 @@ export const HabbitDetail = () => {
 		</>
 	);
 };
+export type RenderDaysProps = {
+	month: {
+		created_at: string | null;
+		day: string;
+		habbit: string;
+		id: string;
+		status: string;
+	}[];
+};
+const RenderDays: FC<RenderDaysProps> = (props) => (
+	<>
+		{props.month.map((day) => (
+			<div key={day.id} tabIndex={0} className="habbit__calendar_day">
+				<h4 className="habbit__calendar_day__item-num">{day.day}</h4>
+			</div>
+		))}
+	</>
+);
