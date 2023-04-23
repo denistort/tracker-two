@@ -40,6 +40,7 @@ export interface Database {
           "date-end": string
           "date-start": string
           description: string
+          icon: string
           id: string
           title: string
           user: string
@@ -49,6 +50,7 @@ export interface Database {
           "date-end": string
           "date-start": string
           description: string
+          icon: string
           id?: string
           title: string
           user: string
@@ -58,6 +60,7 @@ export interface Database {
           "date-end"?: string
           "date-start"?: string
           description?: string
+          icon?: string
           id?: string
           title?: string
           user?: string

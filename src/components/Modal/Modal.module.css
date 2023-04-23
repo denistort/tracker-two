@@ -10,3 +10,9 @@
 	color: red;
 	font-size: 1.2rem;
 }
+.popup {
+	min-height: 96rem;
+}
+.date {
+	width: 100%;
+}

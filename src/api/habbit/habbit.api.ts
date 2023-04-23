@@ -6,6 +6,7 @@ export interface CreateHabbitCredentials {
 	'date-start': string;
 	description: string;
 	title: string;
+	icon: string
 }
 export const createHabbit = async (p: CreateHabbitCredentials) => {
 	const user = await getUserInfo();

@@ -57,7 +57,7 @@ export const HabbitDetail = () => {
 				<div>
 					{trackTree &&
 						Object.keys(trackTree).map((key) => (
-							<div>
+							<div key={key}>
 								<h3>{key}</h3>
 								<div className="habbit__calendar">
 									<RenderDays

@@ -1,0 +1,32 @@
+.buttons {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 1rem;
+}
+.wrapper {
+	position: relative;
+	user-select: none;
+}
+.slider {
+	color: #6a6afb;
+	border: none;
+	position: absolute;
+	top: 0;
+	cursor: pointer;
+	background-color: transparent;
+	height: 100%;
+	user-select: none;
+}
+.slider svg {
+	transition: fill 0.3s ease;
+}
+.slider:hover svg {
+	fill: #6a6afb;
+}
+.left {
+	left: -2.2rem;
+	transform: rotate(180deg);
+}
+.right {
+	right: -2.2rem;
+}

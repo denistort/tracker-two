@@ -350,13 +350,13 @@ button img {
 	max-width: 60rem;
 	width: 100%;
 	padding: 2rem;
-	position: relative;
+	position: absolute;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	z-index: 6;
-	top: 20%;
-	margin-bottom: 10rem;
+	top: 10%;
+	bottom: 10%;
 }
 
 .popup__close {
@@ -405,12 +405,15 @@ h2 {
 
 .icon:hover {
 	background: #6a6afb;
+	
 }
 
 .icon:hover img {
 	filter: brightness(0) invert(1);
 }
-
+.icon img {
+	color: #5051f9;
+}
 .icon_active img {
 	filter: brightness(0) invert(1);
 }

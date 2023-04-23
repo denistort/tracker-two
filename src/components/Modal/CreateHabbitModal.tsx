@@ -11,6 +11,9 @@ import { useNotifications } from 'reapop';
 import { createHabbit } from '../../api/habbit/habbit.api';
 
 import { useRevalidator } from 'react-router-dom';
+import { IconSelect } from '../IconSelect/IconSelect';
+import c from 'classnames';
+
 export interface ModalProps {
 	isOpen: boolean;
 	handleClose: () => void;
@@ -24,7 +27,7 @@ const schema = yup
 	.required();
 type FormData = yup.InferType<typeof schema>;
 
-export const Modal: FC<ModalProps> = ({ isOpen, handleClose }) => {
+export const CreateHabbitModal: FC<ModalProps> = ({ isOpen, handleClose }) => {
 	const {
 		register,
 		handleSubmit,
@@ -34,6 +37,7 @@ export const Modal: FC<ModalProps> = ({ isOpen, handleClose }) => {
 		resolver: yupResolver(schema),
 	});
 	const [isLoading, setIsLoading] = useState(false);
+	const [selectedIcon, setSelectedIcon] = useState('water');
 	const [dateStart, setDateStart] = useState<Date>(new Date());
 	const [dateEnd, setDateEnd] = useState<Date>(new Date());
 	const revalidate = useRevalidator();
@@ -59,6 +63,7 @@ export const Modal: FC<ModalProps> = ({ isOpen, handleClose }) => {
 					'date-start': dateStart.toDateString(),
 					title: data.title,
 					description: data.description,
+					icon: selectedIcon,
 				});
 				notify('Привычка успешно создана', 'success');
 				revalidate.revalidate();
@@ -78,23 +83,12 @@ export const Modal: FC<ModalProps> = ({ isOpen, handleClose }) => {
 	return (
 		<ReactPortal wrapperId="modal-root">
 			<div className="cover" id="add-habbit-popup">
-				<div className="popup">
+				<div className={c("popup", style.popup)}>
 					<h2>Новая привычка</h2>
-					<div className="icon-label">Иконка</div>
-					<div className="icon-select">
-						<button
-							className="icon icon_active"
-							// onclick="setIcon(this, 'sport')"
-						>
-							<img src="/images/sport.svg" alt="Спорт" />
-						</button>
-						<button className="icon">
-							<img src="/images/water.svg" alt="Напитки" />
-						</button>
-						<button className="icon">
-							<img src="/images/food.svg" alt="Еда" />
-						</button>
-					</div>
+					<IconSelect
+						selectedIcon={selectedIcon}
+						onChange={(icon) => setSelectedIcon(icon)}
+					></IconSelect>
 					<form
 						onSubmit={handleSubmit(onSubmitHandler)}
 						className="popup__form"
@@ -139,7 +133,8 @@ export const Modal: FC<ModalProps> = ({ isOpen, handleClose }) => {
 								</div>
 							)}
 						</div>
-						<div>
+						<div className={style.date}>
+							<div className='icon-label'>Выбери диапозон</div>
 							<DateRange
 								startDatePlaceholder={dateStart?.toLocaleDateString()}
 								minDate={new Date()}
