@@ -1,0 +1,24 @@
+.habbit_item {
+	height: 15rem;
+	border-radius: 1rem;
+	cursor: pointer;
+	background-color: white;
+}
+.icon {
+	width: 10rem
+}
+
+.title {
+	margin: 0;
+	text-align: center;
+}
+.minimodal {
+	background-color: rgb(253, 252, 252);
+	border-radius: 1rem;
+	position: absolute;
+	box-shadow: var(--box-shadow);
+	padding: 2rem;
+	font-size: 1.4rem;
+	display: flex;
+	gap: 2rem;
+}

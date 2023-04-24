@@ -4,10 +4,12 @@ import { router } from './router';
 import NotificationsSystem, { wyboTheme, useNotifications } from 'reapop';
 import { TopNotification } from './components/TopNotification/TopNotification';
 import { useAppSelector } from './store/hocs';
+import { useEffect } from 'react';
 
 function App() {
 	const { notifications, dismissNotification } = useNotifications();
 	const { userCredentials } = useAppSelector((state) => state.userReducer);
+
 	return (
 		<div className="app">
 			<TopNotification

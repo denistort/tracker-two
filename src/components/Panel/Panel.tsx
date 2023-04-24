@@ -4,7 +4,7 @@ import { useNotifications } from 'reapop';
 import useNProgress from '../../Hooks/UseNProgress';
 import { useAppDispatch, useAppSelector } from '../../store/hocs';
 import { signOutAction } from '../../store/reducers/userSlice/actionCreator';
-import { CreateHabbitModal } from '../Modal/CreateHabbitModal';
+import { CreateHabbitModal } from '../CreateHabbitModal/CreateHabbitModal';
 export const Panel = () => {
 	const [modalOpen, setModalOpen] = useState(false);
 	const { userCredentials, isLoading, error } = useAppSelector((state) => state.userReducer);

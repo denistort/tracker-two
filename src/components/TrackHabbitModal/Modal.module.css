@@ -1,0 +1,18 @@
+.succes {
+	background: rgb(111, 233, 111);
+	color: white;
+}
+.error {
+	background-color: rgba(252, 105, 105, 0.651);
+	color: white;
+}
+.validation-error {
+	color: red;
+	font-size: 1.2rem;
+}
+/* .popup {
+	min-height: 24rem;
+} */
+.date {
+	width: 100%;
+}

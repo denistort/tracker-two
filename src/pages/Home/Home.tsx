@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import {
 	Link,
 	LoaderFunctionArgs,
@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { fetchUsersHabbit } from '../../api/habbit/habbit.api';
 import useNProgress from '../../Hooks/UseNProgress';
+import { HabbitItem } from './HabbitItem/HabbitItem';
 
 import c from './Home.module.css';
 export const homeLoader = async (_props: LoaderFunctionArgs) => {
@@ -26,6 +27,8 @@ export const Home = () => {
 	const [oneCol, setOneCol] = useState(false);
 	const { habbits } = useLoaderData() as HomeData;
 	const { state } = useNavigation();
+	const [modalOpen, setModalOpen] = useState(false);
+	const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
 	useNProgress({}, state === 'loading' || state === 'submitting');
 	return (
 		<>
@@ -40,15 +43,12 @@ export const Home = () => {
 			>
 				{habbits
 					? habbits.map((habbit, index) => (
-							<Link to={`/habbit/${habbit.id}`} key={habbit.id}>
-								<div className={c.habbit_item}>
-									<img
-										src={habbit.icon}
-										alt={habbit + ' ' + index + 1}
-									/>
-									<h3>{habbit.title}</h3>
-								</div>
-							</Link>
+							<HabbitItem
+								key={habbit.id}
+								title={habbit.title}
+								id={habbit.id}
+								icon={habbit.icon}
+							></HabbitItem>
 					  ))
 					: 'нет привычек'}
 			</div>

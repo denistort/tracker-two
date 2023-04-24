@@ -8,9 +8,3 @@
 .multipleCol {
 	grid-template-columns: repeat(4, 1fr);
 }
-.habbit_item {
-	height: 15rem;
-	border-radius: 1rem;
-	cursor: pointer;
-	background-color: white;
-}

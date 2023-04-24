@@ -2,6 +2,7 @@ import { FC, DetailedHTMLProps, useState } from 'react';
 
 import c from 'classnames';
 import style from './IconSelect.module.css';
+import { motion } from 'framer-motion';
 
 export interface IconSelectProps {
 	onChange: (icon: string) => void;
@@ -130,15 +131,18 @@ export const IconSelect: FC<IconSelectProps> = (props) => {
 			<div className="icon-label">Иконка</div>
 			<div className={c('icon-select', style['buttons'])}>
 				{iconsArray[pagination].map((icon) => (
-					<button
+					<motion.button
 						key={icon.icon}
 						className={c('icon', {
 							icon_active: props.selectedIcon === icon.icon,
 						})}
 						onClick={() => props.onChange(icon.icon)}
+						initial={{ opacity: 0, x: '500px' }}
+						animate={{ opacity: 1, x: 0 }}
+						exit={{ opacity: 0, x: 0 }}
 					>
 						<img src={`/icons/${icon.icon}.svg`} alt="Спорт" />
-					</button>
+					</motion.button>
 				))}
 			</div>
 		</div>

@@ -2,6 +2,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	padding: 1rem;
+	overflow: hidden;
 }
 .wrapper {
 	position: relative;
@@ -24,9 +25,9 @@
 	fill: #6a6afb;
 }
 .left {
-	left: -2.2rem;
+	left: -2rem;
 	transform: rotate(180deg);
 }
 .right {
-	right: -2.2rem;
+	right: -2rem;
 }
