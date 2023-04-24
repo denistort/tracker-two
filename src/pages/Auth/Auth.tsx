@@ -1,3 +1,4 @@
+import { AnimatePresence } from 'framer-motion';
 import { LoaderFunction, useLoaderData } from 'react-router-dom';
 import { SignInForm } from './SignInForm';
 import { SignUpForm } from './SignUpForm';
@@ -21,7 +22,9 @@ export const Auth = () => {
 					src="/images/logo.svg"
 					alt="логотип habbit"
 				/>
-				{tab === 'sign-in' ? <SignInForm /> : <SignUpForm />}
+				<AnimatePresence>
+					{tab === 'sign-in' ? <SignInForm /> : <SignUpForm />}
+				</AnimatePresence>
 			</div>
 		</>
 	);

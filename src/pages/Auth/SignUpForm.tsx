@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../store/hocs';
 import { signUpEmailProviderAction } from '../../store/reducers/userSlice/actionCreator';
+import { motion } from 'framer-motion';
 
 const schema = yup
 	.object({
@@ -72,7 +73,10 @@ export const SignUpForm = () => {
 	};
 
 	return (
-		<form
+		<motion.form
+			initial={{ opacity: 0, x: '5000px' }}
+			animate={{ opacity: 1, x: 0 }}
+			exit={{ opacity: 0, x: '5000px' }}
 			className="login-form__wrapper"
 			onSubmit={handleSubmit(onSubmitHandler)}
 		>
@@ -187,6 +191,6 @@ export const SignUpForm = () => {
 				<Link to={'/'}>Вернуться в приложение</Link>
 				<Link to={'/auth?tab=sign-in'}>Войти</Link>
 			</div>
-		</form>
+		</motion.form>
 	);
 };
