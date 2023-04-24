@@ -6,7 +6,7 @@ export interface CreateHabbitCredentials {
 	'date-start': string;
 	description: string;
 	title: string;
-	icon: string
+	icon: string;
 }
 export const createHabbit = async (p: CreateHabbitCredentials) => {
 	const user = await getUserInfo();
@@ -101,4 +101,18 @@ export const fetchHabbitById = async (id: string) => {
 	if (habbit.error?.message) {
 		throw new Error(habbit.error.message);
 	}
+};
+
+export const trackDay = async (id: string): Promise<boolean> => {
+
+	const res = await supabase
+		.from('Tracks')
+		.update({ status: 'done' })
+		.eq('id', id)
+	console.log(res);
+
+	if (res.error) {
+		throw new Error(res.error.message);
+	}
+	return true;
 };

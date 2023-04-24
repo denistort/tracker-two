@@ -10,6 +10,7 @@ import { ReactPortal } from '../ReactPortal/ReactPortal';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import c from 'classnames';
+import { useOutsideClick } from '../../Hooks/useClickOutSide';
 
 export type BaseModalProps = {
 	handleClose: () => void;
@@ -44,26 +45,23 @@ export const BaseModal: FC<PropsWithChildren<BaseModalProps>> = ({
 	...rest
 }) => {
 	const ref = useRef<HTMLDivElement>();
+
 	useEffect(() => {
 		const closeOnEscapeKey = (e: KeyboardEvent) =>
 			e.key === 'Escape' ? handleClose() : null;
-		if (ref.current) {
-			ref.current.focus();
-		}
 		document.body.addEventListener('keydown', closeOnEscapeKey);
 		return () => {
 			document.body.removeEventListener('keydown', closeOnEscapeKey);
 		};
 	}, [handleClose]);
+
 	return (
 		<ReactPortal wrapperId="modal-root">
 			{isOpen && (
 				<AnimatePresence mode={'wait'}>
 					<motion.div
-						ref={(refe) => {
-							if (refe) {
-								ref.current = refe;
-							}
+						onClick={() => {
+							handleClose()
 						}}
 						tabIndex={1}
 						className="cover"
@@ -73,6 +71,9 @@ export const BaseModal: FC<PropsWithChildren<BaseModalProps>> = ({
 						exit={{ opacity: 0 }}
 					>
 						<motion.div
+							onClick={(e) => {
+								e.stopPropagation();
+							}}
 							variants={dropIn}
 							initial="hidden"
 							animate="visible"

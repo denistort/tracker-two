@@ -10,9 +10,11 @@ import { useNotifications } from 'reapop';
 
 import { useRevalidator } from 'react-router-dom';
 import { BaseModal, BaseModalProps } from '../BaseModal/BaseModa';
+import { trackDay } from '../../api/habbit/habbit.api';
 
 export interface TrackHabbitModalProps extends BaseModalProps {
 	day: string;
+	id: string;
 }
 
 const schema = yup
@@ -26,6 +28,7 @@ export const TrackHabbitModal: FC<TrackHabbitModalProps> = ({
 	isOpen,
 	handleClose,
 	day,
+	id
 }) => {
 	const {
 		register,
@@ -51,28 +54,16 @@ export const TrackHabbitModal: FC<TrackHabbitModalProps> = ({
 	}, [handleClose]);
 	const onSubmitHandler = async (data: FormData) => {
 		setIsLoading(true);
-		// if (userCredentials?.id) {
-		// 	try {
-		// 		console.log(userCredentials.id);
-		// 		await createHabbit({
-		// 			'date-end': dateEnd.toDateString(),
-		// 			'date-start': dateStart.toDateString(),
-		// 			title: data.title,
-		// 			description: data.description,
-		// 			icon: selectedIcon,
-		// 		});
-		// 		notify('Привычка успешно создана', 'success');
-		// 		revalidate.revalidate();
-		// 		handleClose();
-		// 	} catch (error) {
-		// 		notify(
-		// 			'Привычка не создана произошла ошибка: ' + error,
-		// 			'error'
-		// 		);
-		// 	} finally {
-		// 		setIsLoading(false);
-		// 	}
-		// }
+		try {
+			await trackDay(id);
+			notify('Привычка успешно создана', 'success');
+			revalidate.revalidate();
+			handleClose();
+		} catch (error) {
+			notify('Привычка не создана произошла ошибка: ' + error, 'error');
+		} finally {
+			setIsLoading(false);
+		}
 		reset();
 	};
 	return (

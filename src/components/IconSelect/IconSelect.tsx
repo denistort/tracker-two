@@ -72,7 +72,6 @@ const iconsArray: IconsArrayType = [
 export const IconSelect: FC<IconSelectProps> = (props) => {
 	const [pagination, sePagination] = useState(0);
 	const onNextSlide = () => {
-		console.log(Math.min(pagination + 1, iconsArray.length - 1));
 		sePagination(Math.min(pagination + 1, iconsArray.length - 1));
 	};
 	const onPreviousSlide = () => {
@@ -137,9 +136,9 @@ export const IconSelect: FC<IconSelectProps> = (props) => {
 							icon_active: props.selectedIcon === icon.icon,
 						})}
 						onClick={() => props.onChange(icon.icon)}
-						initial={{ opacity: 0, x: '500px' }}
-						animate={{ opacity: 1, x: 0 }}
-						exit={{ opacity: 0, x: 0 }}
+						initial={{ x: '500px' }}
+						animate={{ x: 0 }}
+						exit={{ x: 0 }}
 					>
 						<img src={`/icons/${icon.icon}.svg`} alt="Спорт" />
 					</motion.button>

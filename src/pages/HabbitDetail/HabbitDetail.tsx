@@ -9,6 +9,8 @@ import { fetchTracks } from '../../api/tracks/tracks.api';
 import { HabbitHeader } from '../../components/HabbitHeader/HabbitHeader';
 import { TrackHabbitModal } from '../../components/TrackHabbitModal/TrackHabbitModal';
 import useNProgress from '../../Hooks/UseNProgress';
+import c from 'classnames';
+import style from './HabbitDetail.module.css';
 
 export const habbitDetailLoader = async ({ params }: LoaderFunctionArgs) => {
 	const id = params['id'];
@@ -108,6 +110,7 @@ const RenderDays: FC<RenderDaysProps> = (props) => (
 				id={day.id}
 				day={day.day}
 				isToday={day.isToday}
+				status={day.status}
 			></Day>
 		))}
 	</>
@@ -115,9 +118,10 @@ const RenderDays: FC<RenderDaysProps> = (props) => (
 export type DayProps = {
 	id: string;
 	day: string;
+	status: string;
 	isToday: string;
 };
-const Day: FC<DayProps> = ({ id, day, isToday }) => {
+const Day: FC<DayProps> = ({ id, day, isToday, status }) => {
 	const [modalOpen, setModalOpen] = useState(false);
 	const onOpenHandler = () => {
 		if (isToday) {
@@ -130,14 +134,19 @@ const Day: FC<DayProps> = ({ id, day, isToday }) => {
 			onClick={onOpenHandler}
 			key={id}
 			tabIndex={0}
-			className="habbit__calendar_day"
+			className={c('habbit__calendar_day', {
+				[style.succes]: status === 'done',
+			})}
 		>
 			<h4 className="habbit__calendar_day__item-num">{day}</h4>
 			{isToday && <span>Today</span>}
 			<TrackHabbitModal
 				isOpen={modalOpen}
-				handleClose={() => setModalOpen(false)}
+				handleClose={() => {
+					setModalOpen(false);
+				}}
 				day={day}
+				id={id}
 			></TrackHabbitModal>
 		</div>
 	);
