@@ -1,17 +1,22 @@
 import { ReactNode, FC } from 'react';
-import { useAppSelector } from '../store/hocs';
 import { Navigate } from 'react-router-dom';
+import { useIsAuth } from '../Hooks/useIsAuth';
 
 export interface PrivateForAuthentificatedProps {
 	children: ReactNode;
 }
 
-export const PrivateForAuthentificated: FC<PrivateForAuthentificatedProps> = ({ children }) => {
-	const { userCredentials } = useAppSelector((state) => state.userReducer)
+export const PrivateForAuthentificated: FC<PrivateForAuthentificatedProps> = ({
+	children,
+}) => {
+	const status = useIsAuth();
 
-	if (!userCredentials) {
-		return <>{children}</>;
-	} else {
-		return <Navigate to={'/'}/>
+	if (status === 'authenticated') {
+		return <Navigate to={'/'} />;
 	}
+	if (status === 'not-authenticated') {
+		return <>{children}</>;
+	}
+
+	return null;
 };

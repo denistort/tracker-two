@@ -9,6 +9,7 @@
 	--day-not-done-color: #ff5a5a96;
 	--error-color: rgb(231, 88, 88);
 	--succes-color: rgb(90, 219, 108);
+	--primary-color: #5051f9;
 	--max-width: 128rem;
 }
 html {
@@ -445,7 +446,9 @@ h2 {
 	transition: box-shadow 0.4s ease;
 	padding: 1rem;
 	user-select: none;
+	position: relative;
 	cursor: pointer;
+	overflow: hidden;
 }
 
 .habbit__calendar_day:hover {

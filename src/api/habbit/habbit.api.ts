@@ -104,15 +104,28 @@ export const fetchHabbitById = async (id: string) => {
 };
 
 export const trackDay = async (id: string): Promise<boolean> => {
-
 	const res = await supabase
 		.from('Tracks')
 		.update({ status: 'done' })
-		.eq('id', id)
+		.eq('id', id);
 	console.log(res);
 
 	if (res.error) {
 		throw new Error(res.error.message);
 	}
 	return true;
+};
+
+export type Track = {
+	created_at: string | null;
+	day: string;
+	habbit: string;
+	id: string;
+	status: string;
+}[];
+export const trackAsMissedDay = async (tracks: Track) => {
+	const promises = tracks.map((track) =>
+		supabase.from('Tracks').update({ status: 'missed' }).eq('id', track.id)
+	);
+	await Promise.all(promises)
 };

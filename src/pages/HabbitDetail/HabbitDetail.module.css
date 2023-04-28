@@ -1,3 +1,36 @@
 .succes {
-	background-color: var(--day-done-color);
+	background-color: var(--day-done-color) !important;
+}
+.missed {
+	background-color: var(--error-color) !important;
+	cursor: not-allowed !important;
+}
+
+.missed_title {
+	color: white !important;
+}
+
+.status_bar {
+	width: 20rem;
+	transform: rotate(45deg);
+	position: absolute;
+	
+    top: 1.2rem;
+    right: -7.5rem;
+
+	font-size: 1.3rem;
+	padding: 0.5rem;
+}
+.today_success {
+	color: var(--day-done-color);
+	background: white;
+}
+
+.today_default {
+	color: white;
+	background: var(--primary-color);
+}
+
+.footer {
+	padding: 1rem;
 }

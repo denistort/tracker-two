@@ -14,7 +14,7 @@ export const HabbitHeader: FC<HabbitHeaderProps> = ({ title, progress }) => {
 					<div className="progress__percent">{progress}%</div>
 				</div>
 				<div className="progress__bar">
-					<div className="progress__cover-bar"></div>
+					<div className="progress__cover-bar" style={{ width: `${progress}%`}}></div>
 				</div>
 			</div>
 		</header>

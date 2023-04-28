@@ -77,8 +77,18 @@ export const signUpWithEmailAndPassWord = async ({
  *
  * Get currentUser
  */
-export const getCurrentUser = async (): Promise<UserResponse> =>
-	supabase.auth.getUser();
+export const getCurrentUser = async (): Promise<UserResponse['data']['user'] | null> => {
+	try {
+		const res = await supabase.auth.getUser();
+		if (res.data.user) {
+			return res.data.user
+		}
+		return null;
+	} catch (error) {
+		return null;
+	}
+
+}
 
 /**
  * signOut

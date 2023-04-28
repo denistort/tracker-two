@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useNotifications } from 'reapop';
 import useNProgress from '../../Hooks/UseNProgress';
 import { useAppDispatch, useAppSelector } from '../../store/hocs';
 import { signOutAction } from '../../store/reducers/userSlice/actionCreator';
 import { CreateHabbitModal } from '../CreateHabbitModal/CreateHabbitModal';
+
 export const Panel = () => {
 	const [modalOpen, setModalOpen] = useState(false);
 	const { userCredentials, isLoading, error } = useAppSelector((state) => state.userReducer);
 	const dispatch = useAppDispatch();
 	useNProgress({}, isLoading);
-	const notifications = useNotifications()
+	const notifications = useNotifications();
+	const navigate = useNavigate()
 	useEffect(() => {
 		if (!userCredentials && !isLoading && error) {
 			notifications.notify('Что-то пошло не так', 'error')
@@ -21,6 +23,7 @@ export const Panel = () => {
 	}, [isLoading])
 	const onClickHandler = () => {
 		dispatch(signOutAction());
+		navigate('/auth?tab=sign-in');
 	}
 	return (
 		<div className={`panel transition`}>

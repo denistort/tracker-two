@@ -28,6 +28,9 @@ export const authSlice = createSlice({
 		/**
 		 * Sign up
 		 */
+		resetUser: (state) => {
+			state.userCredentials = null
+		}
 	},
 	extraReducers: (builder) => {
 		/**
